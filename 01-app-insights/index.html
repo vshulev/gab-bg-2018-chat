@@ -29,7 +29,8 @@
           var xhr = $.get('https://api.giphy.com/v1/gifs/search?q=' + val + '&api_key=NB11cSMREpk21cjrpQcEnIn2lAU580Bf&limit=5');
           xhr.done(function (data) {
             if (data && data.data && data.data.length > 0) {
-              socket.emit('chat message', data.data[0].images.fixed_height.url);
+              var img = data.data[Math.floor(Math.random() * data.data.length)];
+              socket.emit('chat message', img.images.fixed_height.url);
             }
           });
           $('#m').val('');
