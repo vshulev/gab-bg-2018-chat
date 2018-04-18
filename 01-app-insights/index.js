@@ -42,8 +42,11 @@ async function main () {
     init().then(msg => socket.emit('init', msg))
 
     socket.on('chat message', async function (msg) {
+      const start = process.hrtime()
       db.table('messages').insert({ url: msg, created_at: db.fn.now() }).then(() => null)
       io.emit('chat message', msg)
+      const elapsed = process.hrtime(start)
+      insights.defaultClient.trackRequest({ name: 'chat message', url: 'https://gab-2018-chat.azurewebsites.net/', duration: elapsed[0] * 1000 + elapsed[1] / 1000000, resultCode: 200, success: true })
     })
   })
 
