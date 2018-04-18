@@ -41,6 +41,7 @@
             console.log(msg[i].url)
             $('#messages').prepend($('<li>').html('<img src="' + msg[i].url + '">'));
           }
+          $("html, body").animate({ scrollTop: $(document).height() }, "slow");
         });
         socket.on('chat message', function (msg){
           $('#messages').append($('<li>').html('<img src="' + msg + '">'));
