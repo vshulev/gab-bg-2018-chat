@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines":{
+  "engines": {
     "node": "8.9.x"
   },
   "dependencies": {
+    "applicationinsights": "^1.0.2",
     "express": "^4.16.3",
     "knex": "^0.14.6",
     "socket.io": "^2.1.0",
@@ -15,7 +16,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node 00-base"
+    "start": "node 01-app-insights"
   },
   "repository": {
     "type": "git",
