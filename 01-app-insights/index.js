@@ -1,14 +1,14 @@
+const insights = require('applicationinsights')
+if (process.env.APP_INSIGHTS_INSTRUMENTATION_KEY) {
+  insights.setup(process.env.APP_INSIGHTS_INSTRUMENTATION_KEY)
+  insights.start()
+}
+
 const app = require('express')()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const knex = require('knex')
 const path = require('path')
-const insights = require('applicationinsights')
-
-if (process.env.APP_INSIGHTS_INSTRUMENTATION_KEY) {
-  insights.setup(process.env.APP_INSIGHTS_INSTRUMENTATION_KEY)
-  insights.start()
-}
 
 const port = process.env.PORT || 3000
 
