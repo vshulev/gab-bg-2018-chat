@@ -36,7 +36,6 @@
           return false;
         });
         socket.on('init', function (msg) {
-          console.log('INITTED', msg)
           for (var i = 0; i < msg.length; i++) {
             console.log(msg[i].url)
             $('#messages').prepend($('<li>').html('<img src="' + msg[i].url + '">'));
