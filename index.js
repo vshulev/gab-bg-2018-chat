@@ -1,8 +1,6 @@
 const insights = require('applicationinsights')
-if (process.env.APP_INSIGHTS_INSTRUMENTATION_KEY) {
-  insights.setup(process.env.APP_INSIGHTS_INSTRUMENTATION_KEY)
-  insights.start()
-}
+insights.setup('465adfc2-7b7b-49c7-ad85-880e9d6884c9') // replace with your own ikey here
+insights.start()
 
 const app = require('express')()
 const http = require('http').Server(app)
@@ -12,9 +10,16 @@ const path = require('path')
 
 const port = process.env.PORT || 3000
 
+function trackException () {
+  console.log('throw custom exception')
+  insights.defaultClient.trackException({ exception: new Error('test error') })
+  setTimeout(trackException, 60000)
+}
+trackException()
+
 const db = require('knex')({
   dialect: 'sqlite3',
-  connection: { filename: path.join(__dirname, '../messages.db') }
+  connection: { filename: path.join(__dirname, './messages.db') }
 })
 
 // passes initial message data to connected socket
@@ -36,6 +41,11 @@ async function main () {
 
   app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html')
+  })
+
+  app.get('/cleanup', function (req, res) {
+    // TODO implement db cleanup...
+    res.send({ ok: true })
   })
 
   io.on('connection', function (socket) {
